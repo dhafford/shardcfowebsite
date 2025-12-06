@@ -19,7 +19,7 @@ const Navbar = () => {
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/40">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src={logoDark} alt="ShardCFO" className="h-8 w-auto" />
+          <img src={logoDark} alt="ShardCFO" className="h-14 w-auto" />
         </div>
 
         {/* Desktop Nav */}
@@ -220,7 +220,7 @@ const Footer = () => {
     <footer className="py-12 px-6 border-t border-border/40 bg-background">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-2">
-          <img src={logoDark} alt="ShardCFO" className="h-8 w-auto" />
+          <img src={logoDark} alt="ShardCFO" className="h-14 w-auto" />
         </div>
         <div className="flex gap-8 text-sm text-muted-foreground">
           <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
