@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 bg-primary rounded-sm rotate-45" />
-          <span className="font-display font-bold text-xl tracking-tight">Shard</span>
+          <span className="font-display font-bold text-xl tracking-tight">ShardCFO</span>
         </div>
 
         {/* Desktop Nav */}
@@ -203,7 +203,7 @@ const CTA = () => {
         <div className="relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Ready to scale with confidence?</h2>
           <p className="text-primary-foreground/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-            Join the founders who trust Shard for their financial infrastructure.
+            Join the founders who trust ShardCFO for their financial infrastructure.
           </p>
           <Button size="lg" variant="secondary" className="rounded-full px-8 h-12 text-base font-semibold hover:bg-white transition-colors">
             Schedule Your Free Audit
@@ -221,7 +221,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-2">
           <div className="w-5 h-5 bg-primary rounded-sm rotate-45" />
-          <span className="font-display font-bold text-lg">Shard</span>
+          <span className="font-display font-bold text-lg">ShardCFO</span>
         </div>
         <div className="flex gap-8 text-sm text-muted-foreground">
           <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
@@ -230,7 +230,7 @@ const Footer = () => {
           <a href="#" className="hover:text-foreground transition-colors">LinkedIn</a>
         </div>
         <div className="text-sm text-muted-foreground">
-          © 2024 Shard Financial. All rights reserved.
+          © 2024 ShardCFO. All rights reserved.
         </div>
       </div>
     </footer>
