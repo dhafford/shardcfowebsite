@@ -9,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import shardHeroImage from '@assets/generated_images/abstract_glass_crystal_shard_on_white_background.png';
+import logoDark from '@assets/logo-dark.svg';
 
 // Navigation Component
 const Navbar = () => {
@@ -18,8 +19,7 @@ const Navbar = () => {
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/40">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-primary rounded-sm rotate-45" />
-          <span className="font-display font-bold text-xl tracking-tight">ShardCFO</span>
+          <img src={logoDark} alt="ShardCFO" className="h-8 w-auto" />
         </div>
 
         {/* Desktop Nav */}
@@ -220,8 +220,7 @@ const Footer = () => {
     <footer className="py-12 px-6 border-t border-border/40 bg-background">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 bg-primary rounded-sm rotate-45" />
-          <span className="font-display font-bold text-lg">ShardCFO</span>
+          <img src={logoDark} alt="ShardCFO" className="h-8 w-auto" />
         </div>
         <div className="flex gap-8 text-sm text-muted-foreground">
           <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
