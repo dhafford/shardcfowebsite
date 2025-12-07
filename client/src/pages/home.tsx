@@ -8,8 +8,71 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import shardHeroImage from '@assets/generated_images/abstract_glass_crystal_shard_on_white_background.png';
 import logoDark from '@assets/logo-dark.svg';
+import ycLogo from '@assets/yc-logo.png';
+import khoslaLogo from '@assets/khosla-logo.png';
+import pcmLogo from '@assets/pcm-logo.webp';
+import trueLogo from '@assets/true-logo.png';
+
+// Terminal Component
+const Terminal = () => {
+  const [visibleLines, setVisibleLines] = React.useState<number>(0);
+
+  const lines = [
+    { type: 'prompt', text: '$ shardcfo' },
+    { type: 'output', text: '>financial_modeling' },
+    { type: 'output', text: '>operational_modeling' },
+    { type: 'output', text: '>capitalization_optimization' },
+    { type: 'output', text: '>investor_facing_material_creation' },
+    { type: 'output', text: '>cashflow_modeling' },
+    { type: 'output', text: '>kpi_metrics_reporting' },
+    { type: 'output', text: '>transition_advisory' },
+    { type: 'cursor', text: '' }
+  ];
+
+  React.useEffect(() => {
+    const timers: NodeJS.Timeout[] = [];
+    lines.forEach((_, index) => {
+      const timer = setTimeout(() => {
+        setVisibleLines(index + 1);
+      }, index * 200);
+      timers.push(timer);
+    });
+    return () => timers.forEach(t => clearTimeout(t));
+  }, []);
+
+  return (
+    <div className="bg-[#0a0a0a] rounded-lg shadow-[0_20px_60px_rgba(0,255,0,0.15)] overflow-hidden border border-[#111] w-full">
+      <div className="bg-[#1a1a1a] px-4 py-3 flex items-center gap-2 border-b border-[#222]">
+        <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+        <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+        <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+        <span className="text-[#aaa] text-xs ml-2 font-mono">terminal — bash — 80×24</span>
+      </div>
+      <div className="p-6 bg-black min-h-[300px] font-mono text-base leading-relaxed">
+        {lines.slice(0, visibleLines).map((line, index) => (
+          <div
+            key={index}
+            className="animate-in fade-in slide-in-from-left-2 duration-300"
+          >
+            {line.type === 'prompt' && (
+              <span className="text-[#00ff00] font-bold">{line.text}</span>
+            )}
+            {line.type === 'output' && (
+              <span className="text-[#00d9ff] block">{line.text}</span>
+            )}
+            {line.type === 'cursor' && (
+              <span>
+                <span className="text-[#00ff00] font-bold">$ </span>
+                <span className="inline-block w-2.5 h-[18px] bg-[#00ff00] animate-pulse"></span>
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 // Navigation Component
 const Navbar = () => {
@@ -17,19 +80,23 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/40">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <img src={logoDark} alt="ShardCFO" className="h-14 w-auto" />
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-start pt-2 justify-between">
+        <div className="flex flex-col items-start -mt-4">
+          <img src={logoDark} alt="ShardCFO" className="h-20 w-auto" />
+          <span className="hidden sm:block text-sm text-muted-foreground -mt-5">Fractional strategic finance that enables builders to focus on building.</span>
         </div>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-8 mt-4">
           <a href="#services" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Services</a>
+          <a href="/resources" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Resources</a>
           <a href="#expertise" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Expertise</a>
           <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">About</a>
-          <Button variant="default" size="sm" className="rounded-full px-6">
-            Get Started
-          </Button>
+          <a href="/contact">
+            <Button variant="default" size="sm" className="rounded-full px-6">
+              Get Started
+            </Button>
+          </a>
         </div>
 
         {/* Mobile Nav Toggle */}
@@ -42,9 +109,12 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-background border-b border-border p-6 flex flex-col gap-4">
           <a href="#services" className="text-lg font-medium" onClick={() => setIsOpen(false)}>Services</a>
+          <a href="/resources" className="text-lg font-medium" onClick={() => setIsOpen(false)}>Resources</a>
           <a href="#expertise" className="text-lg font-medium" onClick={() => setIsOpen(false)}>Expertise</a>
           <a href="#about" className="text-lg font-medium" onClick={() => setIsOpen(false)}>About</a>
-          <Button className="w-full rounded-full">Get Started</Button>
+          <a href="/contact" className="w-full">
+            <Button className="w-full rounded-full">Get Started</Button>
+          </a>
         </div>
       )}
     </nav>
@@ -61,8 +131,8 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.1] mb-6">
-            Financial clarity for <span className="text-muted-foreground">high-growth</span> startups.
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tighter leading-[1.1] mb-6">
+            Disciplined strategic finance for <span className="text-muted-foreground">high-velocity</span> startups.
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
             Expert fractional CFO services to help you scale smarter, fundraise faster, and operate with confidence.
@@ -71,22 +141,20 @@ const Hero = () => {
             <Button size="lg" className="rounded-full px-8 text-base">
               Book a Consultation
             </Button>
-            <Button variant="outline" size="lg" className="rounded-full px-8 text-base group">
-              View Case Studies <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <a href="/resources">
+              <Button variant="outline" size="lg" className="rounded-full px-8 text-base group">
+                View Resources <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </a>
           </div>
         </motion.div>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden flex items-center justify-center"
+          className="relative"
         >
-           <img 
-            src={shardHeroImage}
-            alt="Abstract Financial Clarity" 
-            className="object-cover w-full h-full hover:scale-105 transition-transform duration-700"
-           />
+          <Terminal />
         </motion.div>
       </div>
     </section>
@@ -99,12 +167,11 @@ const SocialProof = () => {
     <section className="py-12 border-y border-border/40 bg-secondary/10">
       <div className="max-w-7xl mx-auto px-6 text-center">
         <p className="text-sm font-medium text-muted-foreground mb-8">TRUSTED BY FOUNDERS BACKED BY</p>
-        <div className="flex flex-wrap justify-center gap-12 md:gap-20 opacity-60 grayscale">
-           {/* Mock Logos - Using simple text for minimalism or svg shapes */}
-           <div className="text-xl font-bold tracking-widest font-mono">Y COMBINATOR</div>
-           <div className="text-xl font-bold tracking-widest font-mono">SEQUOIA</div>
-           <div className="text-xl font-bold tracking-widest font-mono">ANDREESSEN</div>
-           <div className="text-xl font-bold tracking-widest font-mono">INDEX</div>
+        <div className="flex justify-center items-center gap-12 md:gap-20 opacity-60 grayscale">
+           <img src={ycLogo} alt="Y Combinator" className="h-48 w-auto" />
+           <img src={khoslaLogo} alt="Khosla Ventures" className="h-10 w-auto" />
+           <img src={pcmLogo} alt="PCM" className="h-10 w-auto bg-black p-2 rounded" />
+           <img src={trueLogo} alt="True Ventures" className="h-10 w-auto" />
         </div>
       </div>
     </section>
@@ -115,24 +182,40 @@ const SocialProof = () => {
 const Services = () => {
   const services = [
     {
-      icon: <BarChart3 className="w-6 h-6" />,
-      title: "Financial Modeling",
-      description: "Robust, scenario-based forecasting to guide strategic decisions and fundraising."
+      title: "Fractional CFO Leadership",
+      description: "Part-time executive finance leadership providing board management, investor relations, strategic counsel, and cross-functional financial oversight."
     },
     {
-      icon: <PieChart className="w-6 h-6" />,
-      title: "Bookkeeping & Control",
-      description: "Clean, audit-ready books and implemented controls to ensure compliance."
+      title: "Financial Planning & Analysis",
+      description: "Long-range strategic planning, annual operating plans, departmental budgeting, rolling forecasts, and scenario modeling."
     },
     {
-      icon: <TrendingUp className="w-6 h-6" />,
-      title: "Strategic Finance",
-      description: "Unit economics analysis, pricing strategy, and board meeting preparation."
+      title: "Three-Statement Financial Modeling",
+      description: "Institutional-grade P&L, balance sheet, and cash flow models with dynamic working capital, hiring plans, and investor-ready outputs."
     },
     {
-      icon: <ShieldCheck className="w-6 h-6" />,
-      title: "Cash Management",
-      description: "Treasury management and runway optimization to extend your company's life."
+      title: "Unit Economics & KPI Architecture",
+      description: "LTV, CAC, payback, contribution margin, and retention curve frameworks. Executive dashboards and KPI systems that scale."
+    },
+    {
+      title: "Cash Management & Treasury",
+      description: "13-week cash forecasting, runway analysis, liquidity planning, banking relationships, and capital allocation strategies."
+    },
+    {
+      title: "Fundraising & Data Room Prep",
+      description: "Financial models for raising capital, dilution modeling, valuation support, investor storytelling, and full data room creation."
+    },
+    {
+      title: "Strategic Decision Support",
+      description: "Pricing strategy, build-vs-buy analysis, M&A modeling, geographic expansion economics, and capital structure optimization."
+    },
+    {
+      title: "Management Reporting Infrastructure",
+      description: "Automated KPI dashboards, reporting systems, and BI tools. Real-time, decision-ready financial insights."
+    },
+    {
+      title: "Board Materials & Executive Communication",
+      description: "Institutional-grade board decks, KPI scorecards, variance analysis, strategic updates, and forward-looking guidance."
     }
   ];
 
@@ -142,22 +225,20 @@ const Services = () => {
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">More than just spreadsheets.</h2>
         <p className="text-lg text-muted-foreground max-w-2xl">We act as your strategic partner, embedding ourselves in your team to drive growth.</p>
       </div>
-      
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((s, i) => (
-          <motion.div 
+          <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
+            transition={{ delay: i * 0.05 }}
             className="p-6 rounded-2xl border border-border hover:border-primary/50 hover:bg-secondary/20 transition-all group cursor-default"
           >
-            <div className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-              {s.icon}
-            </div>
-            <h3 className="text-xl font-semibold mb-3">{s.title}</h3>
-            <p className="text-muted-foreground leading-relaxed">{s.description}</p>
+            <div className="text-sm font-medium text-muted-foreground mb-2">{String(i + 1).padStart(2, '0')}</div>
+            <h3 className="text-lg font-semibold mb-3">{s.title}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{s.description}</p>
           </motion.div>
         ))}
       </div>
@@ -206,7 +287,7 @@ const CTA = () => {
             Join the founders who trust ShardCFO for their financial infrastructure.
           </p>
           <Button size="lg" variant="secondary" className="rounded-full px-8 h-12 text-base font-semibold hover:bg-white transition-colors">
-            Schedule Your Free Audit
+            Schedule Your Free Consultation
           </Button>
         </div>
       </div>
@@ -220,16 +301,14 @@ const Footer = () => {
     <footer className="py-12 px-6 border-t border-border/40 bg-background">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center gap-2">
-          <img src={logoDark} alt="ShardCFO" className="h-14 w-auto" />
+          <img src={logoDark} alt="ShardCFO" className="h-20 w-auto" />
         </div>
         <div className="flex gap-8 text-sm text-muted-foreground">
           <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
           <a href="#" className="hover:text-foreground transition-colors">Terms</a>
-          <a href="#" className="hover:text-foreground transition-colors">Twitter</a>
-          <a href="#" className="hover:text-foreground transition-colors">LinkedIn</a>
         </div>
         <div className="text-sm text-muted-foreground">
-          © 2024 ShardCFO. All rights reserved.
+          © 2025 ShardCFO. All rights reserved.
         </div>
       </div>
     </footer>
