@@ -225,7 +225,7 @@ const ContactForm = () => {
           onChange={handleChange}
           rows={5}
           className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
-          placeholder="Tell us about your company and what you're looking for..."
+          placeholder="Tell us about your stage, current challenges, and what you're looking for (e.g., 'Pre-seed, preparing for first fundraise, need help building financial model')..."
         />
       </div>
 
@@ -243,7 +243,7 @@ const ContactForm = () => {
         className="w-full rounded-full text-base"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Sending..." : "Submit"}
+        {isSubmitting ? "Sending..." : "Request Free Assessment"}
       </Button>
     </form>
   );
@@ -283,11 +283,25 @@ export default function Contact() {
             className="text-center mb-12"
           >
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Get in Touch
+              Get Your Free Assessment
             </h1>
-            <p className="text-xl text-muted-foreground">
-              Ready to take control of your startup's financial future? Let's talk.
+            <p className="text-xl text-muted-foreground mb-6">
+              Find out if your financials are investor-ready. We'll review your setup and identify gaps in 30 minutes.
             </p>
+            <div className="flex justify-center gap-6 text-sm text-muted-foreground">
+              <span className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Response within 24 hours
+              </span>
+              <span className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                No commitment required
+              </span>
+            </div>
           </motion.div>
 
           <motion.div

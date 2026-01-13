@@ -126,26 +126,39 @@ const Hero = () => {
   return (
     <section className="pt-32 pb-20 md:pt-48 md:pb-32 px-6 max-w-7xl mx-auto">
       <div className="grid md:grid-cols-2 gap-12 items-center">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tighter leading-[1.1] mb-6">
-            Disciplined strategic finance for <span className="text-muted-foreground">high-velocity</span> startups.
+          <p className="text-sm font-medium text-primary/80 mb-4 tracking-wide uppercase">Fractional CFO for Seed to Series B</p>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter leading-[1.1] mb-6">
+            Stop flying blind on your runway.
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
-            Expert fractional CFO services to help you scale smarter, fundraise faster, and operate with confidence.
+            We help tech founders build investor-ready financials, extend runway, and close rounds faster. No full-time CFO salary required.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Button size="lg" className="rounded-full px-8 text-base">
-              Book a Consultation
-            </Button>
+            <a href="/contact">
+              <Button size="lg" className="rounded-full px-8 text-base">
+                Get Your Free Assessment
+              </Button>
+            </a>
             <a href="/resources">
               <Button variant="outline" size="lg" className="rounded-full px-8 text-base group">
                 View Resources <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </a>
+          </div>
+          <div className="mt-8 flex items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-green-500" />
+              <span>YC-backed founders</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-green-500" />
+              <span>$50M+ raised</span>
+            </div>
           </div>
         </motion.div>
         <motion.div
@@ -166,12 +179,12 @@ const SocialProof = () => {
   return (
     <section className="py-12 border-y border-border/40 bg-secondary/10">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <p className="text-sm font-medium text-muted-foreground mb-8">TRUSTED BY FOUNDERS BACKED BY</p>
-        <div className="flex justify-center items-center gap-12 md:gap-20 opacity-60 grayscale">
-           <img src={ycLogo} alt="Y Combinator" className="h-48 w-auto" />
-           <img src={khoslaLogo} alt="Khosla Ventures" className="h-10 w-auto" />
-           <img src={pcmLogo} alt="PCM" className="h-10 w-auto bg-black p-2 rounded" />
-           <img src={trueLogo} alt="True Ventures" className="h-10 w-auto" />
+        <p className="text-sm font-medium text-muted-foreground mb-8">TRUSTED BY FOUNDERS BACKED BY TOP-TIER INVESTORS</p>
+        <div className="flex justify-center items-center gap-8 md:gap-16 flex-wrap">
+           <img src={ycLogo} alt="Y Combinator" className="h-24 md:h-32 w-auto opacity-70 hover:opacity-100 transition-opacity" />
+           <img src={khoslaLogo} alt="Khosla Ventures" className="h-8 md:h-10 w-auto opacity-70 hover:opacity-100 transition-opacity" />
+           <img src={pcmLogo} alt="PCM" className="h-8 md:h-10 w-auto bg-black p-2 rounded opacity-70 hover:opacity-100 transition-opacity" />
+           <img src={trueLogo} alt="True Ventures" className="h-8 md:h-10 w-auto opacity-70 hover:opacity-100 transition-opacity" />
         </div>
       </div>
     </section>
@@ -222,8 +235,8 @@ const Services = () => {
   return (
     <section id="services" className="py-24 px-6 max-w-7xl mx-auto">
       <div className="mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">More than just spreadsheets.</h2>
-        <p className="text-lg text-muted-foreground max-w-2xl">We act as your strategic partner, embedding ourselves in your team to drive growth.</p>
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Everything you need to raise and scale.</h2>
+        <p className="text-lg text-muted-foreground max-w-2xl">From first pitch deck to Series B board meetings, we embed with your team to build the financial infrastructure that investors expect.</p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -282,13 +295,15 @@ const CTA = () => {
       <div className="max-w-5xl mx-auto bg-primary text-primary-foreground rounded-[2rem] p-12 md:p-24 text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
         <div className="relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Ready to scale with confidence?</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Your next round is closer than you think.</h2>
           <p className="text-primary-foreground/80 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-            Join the founders who trust ShardCFO for their financial infrastructure.
+            Get a free 30-minute assessment of your financial readiness. We'll identify gaps and show you exactly what investors will ask for.
           </p>
-          <Button size="lg" variant="secondary" className="rounded-full px-8 h-12 text-base font-semibold hover:bg-white transition-colors">
-            Schedule Your Free Consultation
-          </Button>
+          <a href="/contact">
+            <Button size="lg" variant="secondary" className="rounded-full px-8 h-12 text-base font-semibold hover:bg-white transition-colors">
+              Get Your Free Assessment
+            </Button>
+          </a>
         </div>
       </div>
     </section>
