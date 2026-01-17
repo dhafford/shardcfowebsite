@@ -11,6 +11,7 @@ import FinanceTeamBuilding from "@/pages/resources/finance-team-building";
 import TaxCreditsGuide from "@/pages/resources/tax-credits-guide";
 import AccountingToModels from "@/pages/resources/accounting-to-models";
 import SpreadsheetMistakes from "@/pages/resources/spreadsheet-mistakes";
+import RevenueRecognition from "@/pages/resources/revenue-recognition";
 import Contact from "@/pages/contact";
 import NotFound from "@/pages/not-found";
 
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/resources/tax-credits-guide" component={TaxCreditsGuide} />
       <Route path="/resources/accounting-to-models" component={AccountingToModels} />
       <Route path="/resources/spreadsheet-mistakes" component={SpreadsheetMistakes} />
+      <Route path="/resources/revenue-recognition" component={RevenueRecognition} />
       <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>

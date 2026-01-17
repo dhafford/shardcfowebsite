@@ -105,6 +105,12 @@ const resources = [
     description: "DIY financial modeling costs founders far more than they realize—in blown deals, wasted time, and lost credibility.",
     href: "/resources/spreadsheet-mistakes",
     category: "Financial Modeling"
+  },
+  {
+    title: "The Revenue Recognition Nightmare",
+    description: "Revenue recognition comprises 43% of SEC enforcement actions. Here's your comprehensive guide to ASC 606 compliance for SaaS companies.",
+    href: "/resources/revenue-recognition",
+    category: "SaaS Accounting"
   }
 ];
 
