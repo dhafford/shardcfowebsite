@@ -1,0 +1,11 @@
+# robots.txt for ShardCFO
+# https://shardcfo.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://shardcfo.com/sitemap.xml
+
+# Disallow admin/API routes
+Disallow: /api/
