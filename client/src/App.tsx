@@ -9,6 +9,8 @@ import SaaSMetricsGuide from "@/pages/saas-metrics-guide";
 import BoardPackageGuide from "@/pages/resources/board-package-guide";
 import FinanceTeamBuilding from "@/pages/resources/finance-team-building";
 import TaxCreditsGuide from "@/pages/resources/tax-credits-guide";
+import AccountingToModels from "@/pages/resources/accounting-to-models";
+import SpreadsheetMistakes from "@/pages/resources/spreadsheet-mistakes";
 import Contact from "@/pages/contact";
 import NotFound from "@/pages/not-found";
 
@@ -21,6 +23,8 @@ function Router() {
       <Route path="/resources/board-package-guide" component={BoardPackageGuide} />
       <Route path="/resources/finance-team-building" component={FinanceTeamBuilding} />
       <Route path="/resources/tax-credits-guide" component={TaxCreditsGuide} />
+      <Route path="/resources/accounting-to-models" component={AccountingToModels} />
+      <Route path="/resources/spreadsheet-mistakes" component={SpreadsheetMistakes} />
       <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>

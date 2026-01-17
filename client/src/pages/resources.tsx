@@ -93,6 +93,18 @@ const resources = [
     description: "Learn the core metrics every SaaS business should track: MRR, ARR, churn, CAC, LTV, and more.",
     href: "/resources/saas-metrics-guide",
     category: "SaaS Metrics"
+  },
+  {
+    title: "From Accounting Data to Financial Models",
+    description: "The transformation from backward-looking compliance to forward-looking strategy requires systematic processes, not periodic heroics.",
+    href: "/resources/accounting-to-models",
+    category: "Financial Modeling"
+  },
+  {
+    title: "The Spreadsheet Mistakes That Sink Startups",
+    description: "DIY financial modeling costs founders far more than they realize—in blown deals, wasted time, and lost credibility.",
+    href: "/resources/spreadsheet-mistakes",
+    category: "Financial Modeling"
   }
 ];
 
