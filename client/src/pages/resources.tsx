@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoDark from '@assets/logo-dark.svg';
 import FinancialModelingDiagram from "@/components/FinancialModelingDiagram";
@@ -110,6 +110,8 @@ const resources = [
 ];
 
 export default function Resources() {
+  const [isDiagramOpen, setIsDiagramOpen] = React.useState(false);
+
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/10 selection:text-primary">
       <Navbar />
@@ -120,8 +122,25 @@ export default function Resources() {
         </p>
 
         {/* Financial Modeling Architecture Banner */}
-        <div className="mb-12 -mx-6 md:mx-0">
-          <FinancialModelingDiagram />
+        <div className="mb-12 border border-border rounded-2xl overflow-hidden">
+          <button
+            onClick={() => setIsDiagramOpen(!isDiagramOpen)}
+            className="w-full p-6 md:p-8 flex items-center justify-between bg-secondary/20 hover:bg-secondary/30 transition-colors text-left"
+          >
+            <div>
+              <span className="text-xs font-medium text-primary/70 uppercase tracking-wider">Interactive Diagram</span>
+              <h2 className="text-xl md:text-2xl font-bold mt-1">Financial Modeling Architecture</h2>
+              <p className="text-sm text-muted-foreground mt-1">Complete data flow from source transactions to executive outputs</p>
+            </div>
+            <ChevronDown
+              className={`w-6 h-6 text-muted-foreground transition-transform duration-300 ${isDiagramOpen ? 'rotate-180' : ''}`}
+            />
+          </button>
+          <div
+            className={`transition-all duration-500 ease-in-out overflow-hidden ${isDiagramOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}
+          >
+            <FinancialModelingDiagram />
+          </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
