@@ -2,6 +2,7 @@ import React from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoDark from '@assets/logo-dark.svg';
+import FinancialModelingDiagram from "@/components/FinancialModelingDiagram";
 
 // Navigation Component
 const Navbar = () => {
@@ -117,6 +118,11 @@ export default function Resources() {
         <p className="text-xl text-muted-foreground mb-12 max-w-2xl">
           Guides, frameworks, and insights to help you build investor-ready financials and scale your startup smarter.
         </p>
+
+        {/* Financial Modeling Architecture Banner */}
+        <div className="mb-12 -mx-6 md:mx-0">
+          <FinancialModelingDiagram />
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           {resources.map((resource, index) => (
