@@ -125,3 +125,22 @@
     @apply font-display tracking-tight;
   }
 }
+
+/* Blog post prose styling - add space between paragraphs */
+.prose p {
+  margin-bottom: 1.5em;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose h2 {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.prose h3 {
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+}
