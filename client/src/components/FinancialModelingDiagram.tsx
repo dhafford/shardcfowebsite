@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface Definition {
   title: string;
@@ -16,9 +16,33 @@ interface ColorScheme {
   text: string;
 }
 
+// Custom hook to detect viewport size for responsive design
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 1200,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth });
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowSize;
+};
+
 const FinancialModelingDiagram = () => {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
+  const isTablet = width >= 768 && width < 1024;
 
   // Comprehensive definitions for all components
   const definitions: Definitions = {
@@ -429,12 +453,21 @@ const FinancialModelingDiagram = () => {
     <div
       onMouseEnter={(e) => handleMouseEnter(id, e)}
       onMouseLeave={handleMouseLeave}
+      onClick={(e) => {
+        if (isMobile) {
+          if (activeTooltip === id) {
+            setActiveTooltip(null);
+          } else {
+            handleMouseEnter(id, e);
+          }
+        }
+      }}
       style={{
-        padding: '10px 14px',
+        padding: isMobile ? '8px 10px' : '10px 14px',
         backgroundColor: color.bg,
         border: `2px solid ${color.border}`,
         borderRadius: '8px',
-        fontSize: '13px',
+        fontSize: isMobile ? '11px' : '13px',
         fontWeight: '500',
         color: color.text,
         cursor: 'pointer',
@@ -442,6 +475,7 @@ const FinancialModelingDiagram = () => {
         textAlign: 'center',
         boxShadow: activeTooltip === id ? `0 4px 12px ${color.border}40` : 'none',
         transform: activeTooltip === id ? 'translateY(-2px)' : 'none',
+        wordBreak: isMobile ? 'break-word' : 'normal',
       }}
     >
       {label}
@@ -450,9 +484,9 @@ const FinancialModelingDiagram = () => {
 
   // Section header component
   const SectionHeader = ({ title, subtitle, color }: { title: string; subtitle?: string; color: ColorScheme }) => (
-    <div style={{ marginBottom: '16px' }}>
+    <div style={{ marginBottom: isMobile ? '12px' : '16px' }}>
       <h3 style={{
-        fontSize: '16px',
+        fontSize: isMobile ? '14px' : '16px',
         fontWeight: '700',
         color: color.text,
         marginBottom: '4px',
@@ -461,7 +495,7 @@ const FinancialModelingDiagram = () => {
         {title}
       </h3>
       {subtitle && (
-        <p style={{ fontSize: '12px', color: colors.textLight }}>{subtitle}</p>
+        <p style={{ fontSize: isMobile ? '11px' : '12px', color: colors.textLight }}>{subtitle}</p>
       )}
     </div>
   );
@@ -526,17 +560,17 @@ const FinancialModelingDiagram = () => {
     <div style={{
       fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif',
       backgroundColor: colors.background,
-      padding: '32px',
+      padding: isMobile ? '16px' : '32px',
       borderRadius: '16px',
     }}>
       {/* Header */}
       <div style={{
         maxWidth: '1400px',
-        margin: '0 auto 32px',
+        margin: isMobile ? '0 auto 16px' : '0 auto 32px',
         textAlign: 'center'
       }}>
         <h2 style={{
-          fontSize: '28px',
+          fontSize: isMobile ? '20px' : '28px',
           fontWeight: '800',
           color: colors.text,
           marginBottom: '8px',
@@ -545,13 +579,13 @@ const FinancialModelingDiagram = () => {
           Financial Modeling Architecture
         </h2>
         <p style={{
-          fontSize: '16px',
+          fontSize: isMobile ? '14px' : '16px',
           color: colors.textLight,
           maxWidth: '600px',
           margin: '0 auto'
         }}>
           Complete data flow from source transactions to executive outputs.
-          <span style={{ color: colors.accent, fontWeight: '500' }}> Hover over any element for detailed definitions.</span>
+          <span style={{ color: colors.accent, fontWeight: '500' }}> {isMobile ? 'Tap' : 'Hover over'} any element for detailed definitions.</span>
         </p>
       </div>
 
@@ -568,7 +602,7 @@ const FinancialModelingDiagram = () => {
         <div style={{
           backgroundColor: colors.card,
           borderRadius: '16px',
-          padding: '24px',
+          padding: isMobile ? '16px' : '24px',
           border: `1px solid ${colors.border}`,
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
@@ -579,8 +613,8 @@ const FinancialModelingDiagram = () => {
           />
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(6, 1fr)',
-            gap: '12px'
+            gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : isTablet ? 'repeat(3, 1fr)' : 'repeat(6, 1fr)',
+            gap: isMobile ? '8px' : '12px'
           }}>
             <DiagramItem id="salesTransactions" label="Sales Transactions" color={colors.source} />
             <DiagramItem id="purchaseOrders" label="Purchase Orders" color={colors.source} />
@@ -597,7 +631,7 @@ const FinancialModelingDiagram = () => {
         <div style={{
           backgroundColor: colors.card,
           borderRadius: '16px',
-          padding: '24px',
+          padding: isMobile ? '16px' : '24px',
           border: `1px solid ${colors.border}`,
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
@@ -606,38 +640,54 @@ const FinancialModelingDiagram = () => {
             subtitle="Double-entry bookkeeping and record management"
             color={colors.accounting}
           />
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '16px',
-            flexWrap: 'wrap'
-          }}>
-            <DiagramItem id="journalEntries" label="Journal Entries" color={colors.accounting} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="chartOfAccounts" label="Chart of Accounts" color={colors.accounting} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="subledgers" label="Subledgers" color={colors.accounting} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="generalLedger" label="General Ledger" color={colors.accounting} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="trialBalance" label="Trial Balance" color={colors.accounting} />
-          </div>
+          {isMobile ? (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '8px'
+            }}>
+              <DiagramItem id="journalEntries" label="Journal Entries" color={colors.accounting} />
+              <DiagramItem id="chartOfAccounts" label="Chart of Accounts" color={colors.accounting} />
+              <DiagramItem id="subledgers" label="Subledgers" color={colors.accounting} />
+              <DiagramItem id="generalLedger" label="General Ledger" color={colors.accounting} />
+              <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
+                <DiagramItem id="trialBalance" label="Trial Balance" color={colors.accounting} />
+              </div>
+            </div>
+          ) : (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '16px',
+              flexWrap: 'wrap'
+            }}>
+              <DiagramItem id="journalEntries" label="Journal Entries" color={colors.accounting} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="chartOfAccounts" label="Chart of Accounts" color={colors.accounting} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="subledgers" label="Subledgers" color={colors.accounting} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="generalLedger" label="General Ledger" color={colors.accounting} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="trialBalance" label="Trial Balance" color={colors.accounting} />
+            </div>
+          )}
         </div>
 
         <Arrow direction="down" color={colors.accounting.border} />
 
-        {/* Layer 3 & 4: 3-Statement Model + Driver Assumptions (Side by Side) */}
+        {/* Layer 3 & 4: 3-Statement Model + Driver Assumptions (Side by Side on desktop, stacked on mobile) */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
           gap: '16px'
         }}>
           {/* 3-Statement Model */}
           <div style={{
             backgroundColor: colors.card,
             borderRadius: '16px',
-            padding: '24px',
+            padding: isMobile ? '16px' : '24px',
             border: `1px solid ${colors.border}`,
             boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
           }}>
@@ -650,18 +700,18 @@ const FinancialModelingDiagram = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '12px'
+              gap: isMobile ? '8px' : '12px'
             }}>
               <DiagramItem id="incomeStatement" label="Income Statement (P&L)" color={colors.threeStatement} />
               <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
                 <Arrow direction="bidirectional" color={colors.threeStatement.border} />
               </div>
-              <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: isMobile ? '8px' : '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <DiagramItem id="balanceSheet" label="Balance Sheet" color={colors.threeStatement} />
                 <DiagramItem id="cashFlowStatement" label="Cash Flow Statement" color={colors.threeStatement} />
               </div>
               <div style={{
-                fontSize: '11px',
+                fontSize: isMobile ? '10px' : '11px',
                 color: colors.textLight,
                 textAlign: 'center',
                 marginTop: '8px',
@@ -678,7 +728,7 @@ const FinancialModelingDiagram = () => {
           <div style={{
             backgroundColor: colors.card,
             borderRadius: '16px',
-            padding: '24px',
+            padding: isMobile ? '16px' : '24px',
             border: `1px solid ${colors.border}`,
             boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
           }}>
@@ -689,8 +739,8 @@ const FinancialModelingDiagram = () => {
             />
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '12px'
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+              gap: isMobile ? '8px' : '12px'
             }}>
               <DiagramItem id="revenueDrivers" label="Revenue Drivers" color={colors.drivers} />
               <DiagramItem id="costDrivers" label="Cost Drivers" color={colors.drivers} />
@@ -708,7 +758,7 @@ const FinancialModelingDiagram = () => {
         <div style={{
           backgroundColor: colors.card,
           borderRadius: '16px',
-          padding: '24px',
+          padding: isMobile ? '16px' : '24px',
           border: `1px solid ${colors.border}`,
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
@@ -717,29 +767,47 @@ const FinancialModelingDiagram = () => {
             subtitle="Granular bottom-up model components"
             color={colors.detailed}
           />
+          {isMobile ? (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '8px'
+            }}>
+              <DiagramItem id="revenueModel" label="Revenue Model" color={colors.detailed} />
+              <DiagramItem id="cogsModel" label="COGS/GM Model" color={colors.detailed} />
+              <DiagramItem id="opexModel" label="OpEx Model" color={colors.detailed} />
+              <DiagramItem id="workingCapitalModel" label="Working Capital" color={colors.detailed} />
+              <DiagramItem id="debtSchedule" label="Debt Schedule" color={colors.detailed} />
+              <DiagramItem id="depreciationSchedule" label="D&A Schedule" color={colors.detailed} />
+              <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'center' }}>
+                <DiagramItem id="equityCapTable" label="Equity/Cap Table" color={colors.detailed} />
+              </div>
+            </div>
+          ) : (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px',
+              flexWrap: 'wrap'
+            }}>
+              <DiagramItem id="revenueModel" label="Revenue Model" color={colors.detailed} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="cogsModel" label="COGS/GM Model" color={colors.detailed} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="opexModel" label="OpEx Model" color={colors.detailed} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="workingCapitalModel" label="Working Capital" color={colors.detailed} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="debtSchedule" label="Debt Schedule" color={colors.detailed} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="depreciationSchedule" label="D&A Schedule" color={colors.detailed} />
+              <span style={{ color: colors.textLight }}>-&gt;</span>
+              <DiagramItem id="equityCapTable" label="Equity/Cap Table" color={colors.detailed} />
+            </div>
+          )}
           <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '12px',
-            flexWrap: 'wrap'
-          }}>
-            <DiagramItem id="revenueModel" label="Revenue Model" color={colors.detailed} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="cogsModel" label="COGS/GM Model" color={colors.detailed} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="opexModel" label="OpEx Model" color={colors.detailed} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="workingCapitalModel" label="Working Capital" color={colors.detailed} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="debtSchedule" label="Debt Schedule" color={colors.detailed} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="depreciationSchedule" label="D&A Schedule" color={colors.detailed} />
-            <span style={{ color: colors.textLight }}>-&gt;</span>
-            <DiagramItem id="equityCapTable" label="Equity/Cap Table" color={colors.detailed} />
-          </div>
-          <div style={{
-            marginTop: '16px',
+            marginTop: isMobile ? '8px' : '16px',
             display: 'flex',
             justifyContent: 'center'
           }}>
@@ -753,7 +821,7 @@ const FinancialModelingDiagram = () => {
         <div style={{
           backgroundColor: colors.card,
           borderRadius: '16px',
-          padding: '24px',
+          padding: isMobile ? '16px' : '24px',
           border: `1px solid ${colors.border}`,
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
@@ -764,8 +832,8 @@ const FinancialModelingDiagram = () => {
           />
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(5, 1fr)',
-            gap: '16px'
+            gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)',
+            gap: isMobile ? '12px' : '16px'
           }}>
             {/* Financial KPIs */}
             <div style={{
@@ -870,7 +938,7 @@ const FinancialModelingDiagram = () => {
         <div style={{
           backgroundColor: colors.card,
           borderRadius: '16px',
-          padding: '24px',
+          padding: isMobile ? '16px' : '24px',
           border: `1px solid ${colors.border}`,
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
@@ -881,14 +949,14 @@ const FinancialModelingDiagram = () => {
           />
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '16px'
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+            gap: isMobile ? '12px' : '16px'
           }}>
             {/* Internal Outputs */}
             <div style={{
               backgroundColor: colors.outputs.bg,
               borderRadius: '12px',
-              padding: '16px',
+              padding: isMobile ? '12px' : '16px',
               border: `1px solid ${colors.outputs.border}30`
             }}>
               <h4 style={{ fontSize: '12px', fontWeight: '700', color: colors.outputs.text, marginBottom: '12px' }}>
@@ -907,7 +975,7 @@ const FinancialModelingDiagram = () => {
             <div style={{
               backgroundColor: colors.outputs.bg,
               borderRadius: '12px',
-              padding: '16px',
+              padding: isMobile ? '12px' : '16px',
               border: `1px solid ${colors.outputs.border}30`
             }}>
               <h4 style={{ fontSize: '12px', fontWeight: '700', color: colors.outputs.text, marginBottom: '12px' }}>
@@ -926,7 +994,7 @@ const FinancialModelingDiagram = () => {
             <div style={{
               backgroundColor: colors.outputs.bg,
               borderRadius: '12px',
-              padding: '16px',
+              padding: isMobile ? '12px' : '16px',
               border: `1px solid ${colors.outputs.border}30`
             }}>
               <h4 style={{ fontSize: '12px', fontWeight: '700', color: colors.outputs.text, marginBottom: '12px' }}>
@@ -949,32 +1017,36 @@ const FinancialModelingDiagram = () => {
         <div
           style={{
             position: 'fixed',
-            top: tooltipPosition.y - 10,
-            left: Math.min(Math.max(tooltipPosition.x, 200), typeof window !== 'undefined' ? window.innerWidth - 200 : 1000),
-            transform: 'translate(-50%, -100%)',
+            top: isMobile ? 'auto' : tooltipPosition.y - 10,
+            bottom: isMobile ? '20px' : 'auto',
+            left: isMobile ? '16px' : Math.min(Math.max(tooltipPosition.x, 200), typeof window !== 'undefined' ? window.innerWidth - 200 : 1000),
+            right: isMobile ? '16px' : 'auto',
+            transform: isMobile ? 'none' : 'translate(-50%, -100%)',
             backgroundColor: colors.primary,
             color: 'white',
-            padding: '16px 20px',
+            padding: isMobile ? '12px 16px' : '16px 20px',
             borderRadius: '12px',
             boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
-            maxWidth: '400px',
+            maxWidth: isMobile ? 'none' : '400px',
             zIndex: 1000,
             pointerEvents: 'none',
           }}
         >
-          <div style={{
-            position: 'absolute',
-            bottom: '-8px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: 0,
-            height: 0,
-            borderLeft: '10px solid transparent',
-            borderRight: '10px solid transparent',
-            borderTop: `10px solid ${colors.primary}`
-          }} />
+          {!isMobile && (
+            <div style={{
+              position: 'absolute',
+              bottom: '-8px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 0,
+              height: 0,
+              borderLeft: '10px solid transparent',
+              borderRight: '10px solid transparent',
+              borderTop: `10px solid ${colors.primary}`
+            }} />
+          )}
           <h4 style={{
-            fontSize: '15px',
+            fontSize: isMobile ? '14px' : '15px',
             fontWeight: '700',
             marginBottom: '8px',
             color: colors.accent
@@ -982,7 +1054,7 @@ const FinancialModelingDiagram = () => {
             {definitions[activeTooltip].title}
           </h4>
           <p style={{
-            fontSize: '13px',
+            fontSize: isMobile ? '12px' : '13px',
             lineHeight: '1.5',
             marginBottom: '10px',
             opacity: 0.95
@@ -990,8 +1062,8 @@ const FinancialModelingDiagram = () => {
             {definitions[activeTooltip].definition}
           </p>
           <div style={{
-            fontSize: '12px',
-            padding: '10px 12px',
+            fontSize: isMobile ? '11px' : '12px',
+            padding: isMobile ? '8px 10px' : '10px 12px',
             backgroundColor: 'rgba(255,255,255,0.1)',
             borderRadius: '6px',
             borderLeft: `3px solid ${colors.accent}`
