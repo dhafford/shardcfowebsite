@@ -17,8 +17,6 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           <a href="/#services" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Services</a>
           <a href="/resources" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Resources</a>
-          <a href="/#expertise" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Expertise</a>
-          <a href="/#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">About</a>
           <a href="/contact">
             <Button variant="default" size="sm" className="rounded-full px-6">
               Get Started
@@ -35,8 +33,6 @@ const Navbar = () => {
         <div className="md:hidden absolute top-16 left-0 w-full bg-background border-b border-border p-6 flex flex-col gap-4">
           <a href="/#services" className="text-lg font-medium" onClick={() => setIsOpen(false)}>Services</a>
           <a href="/resources" className="text-lg font-medium" onClick={() => setIsOpen(false)}>Resources</a>
-          <a href="/#expertise" className="text-lg font-medium" onClick={() => setIsOpen(false)}>Expertise</a>
-          <a href="/#about" className="text-lg font-medium" onClick={() => setIsOpen(false)}>About</a>
           <a href="/contact">
             <Button className="w-full rounded-full">Get Started</Button>
           </a>
